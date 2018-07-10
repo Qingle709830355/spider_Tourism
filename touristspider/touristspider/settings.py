@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'touristspider.spiders'
 #USER_AGENT = 'touristspider (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -27,7 +27,7 @@ ROBOTSTXT_OBEY = True
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 0.5
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -64,9 +64,10 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'touristspider.pipelines.TouristspiderPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'touristspider.pipelines.TouristspiderPipeline': 300,
+    'touristspider.pipelines.MongoTouristPipeline': 301
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -88,3 +89,18 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+MONGODB_HOST = 'localhost'
+MONGODB_PORT = 27017
+MONGODB_DB = 'tourist'
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+# SCHEDULER任务分发与调度, 所有爬虫都直接去请求redis中存放的数据
+SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
+# 设置redis的URL队列不会被清理
+SCHEDULER_PERSIST = True
+# 设置redis默认读取的类型， True为set， False或不写默认为list
+REDIS_START_URLS_AS_SET = True
+DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
+
+SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderQueue'
+

@@ -11,4 +11,12 @@ import scrapy
 class TouristspiderItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    collection = 'tourist'
+    title = scrapy.Field()
+    avatar = scrapy.Field()
+    author = scrapy.Field()
+    tags = scrapy.Field()
+    create_info = scrapy.Field()
+    content = scrapy.Field()
+    id = scrapy.Field()
+
